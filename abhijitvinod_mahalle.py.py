@@ -331,7 +331,7 @@ if __name__ == '__main__':
                 
 path = backtracking(closed_list)
 
-
+visualization(visited_node, path)
 
 
 
