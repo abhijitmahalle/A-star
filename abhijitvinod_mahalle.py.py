@@ -161,4 +161,82 @@ def ActionMoveDownSixty(node, node_info, step_size):
     child_node_info = [node, (node_info[1] + 1)]
     return child_node, child_node_info
 
+def costToGo(node, goal_node):
+    return dist(node[:-1], goal_node[:-1])
+
+def totalCost(c2c, c2g):
+    return c2c + c2g
+
+def isGoalReached(node, goal_node):
+    if abs(node[2]-(goal_node[2])%360)<=30 and dist(node[:-1], goal_node[:-1])<=1.5:
+        return True
+    else:
+        return False
+
+#Function that checks if the node is visited
+def isNodeVisited(node, visited_node_matrix):
+    if visited_node_matrix[round(node[0]*2)-1][round(node[1]*2)-1][int((node[2]%360)/30)] != 1:
+        visited_node_matrix[round(node[0]*2)-1][round(node[1]*2)-1][int((node[2]%360)/30)] = 1
+        return False, visited_node_matrix
+    else:
+        return True, visited_node_matrix
+
+#Function that performs backtracking to find a path from the start node to the goal node
+def backtracking(closed_list):
+    '''
+    Input:
+    closed_list : dictionary of all closed nodes
+    
+    Output:
+    path : list[nodes from goal node to start node]
+    '''
+    path = []
+    goal = list(closed_list)[-1]
+    path.append(goal)
+    
+    while True:
+        parent = closed_list[goal]
+        
+        if parent == None:
+            break 
+            
+        path.append(parent)
+        goal = parent
+    return path
+
+# Function that visualizes the output of A* algorithm
+def visualization(visited_node, optimal_path):
+    '''
+    Input:
+    visited_node : list of visited nodes along with their
+    '''
+    img_map = np.zeros((250, 400, 3), dtype = np.uint8)
+    for y in range(img_map.shape[0]):
+        for x in range(img_map.shape[1]):
+            node = (x, y, 0)
+            if in_obstacle_space(node):
+                img_map[y-1][x-1] = [0, 0, 255]
+    
+    plt.ion()
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.imshow(img_map)
+    plt.gca().invert_yaxis()
+    fig.canvas.draw()
+    fig.canvas.flush_events()
+    
+    for i in visited_node:
+        parent_node = i[0]
+        child_node =i[1]
+        ax.plot((parent_node[0],child_node[0]),(parent_node[1],child_node[1]),'w')
+        fig.canvas.draw()
+        fig.canvas.flush_events()
+        
+    for i in range(len(optimal_path)-1):
+        parent_node = optimal_path[-1-i]
+        child_node =optimal_path[-2-i]
+        ax.plot((parent_node[0],child_node[0]),(parent_node[1],child_node[1]),'g')
+        fig.canvas.draw()
+        fig.canvas.flush_events()
+
 
