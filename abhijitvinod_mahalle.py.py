@@ -76,4 +76,89 @@ def in_clearance_space(node):
     else:
         return False
 
+#Function to move the node straight
+def ActionMoveZero(node, node_info, step_size):
+    '''
+    Input:
+    node      : tuple(x, y, theta)
+    node_info : list[parent_node, cost_to_come]
+    
+    Output:
+    child_node, child_node_info
+    '''
+    x, y, theta = node
+    child_node = (x+step_size*cos(radians(theta)), y+step_size*sin(radians(theta)), theta)
+    #Rounding off the node to nearest 0.5 decimal value
+    child_node = (round(child_node[0]*2)/2, round(child_node[1]*2)/2, child_node[2])
+    child_node_info = [node, (node_info[1] + 1)]
+    return child_node, child_node_info
+
+#Function to move the node 30 degrees in anticlockwise direction
+def ActionMoveUpThirty(node, node_info, step_size):
+    '''
+    Input:
+    node      : tuple(x, y, theta)
+    node_info : list[parent_node, cost_to_come]
+    
+    Output:
+    child_node, child_node_info
+    '''
+    x, y, theta = node
+    child_node = (x+step_size*cos(radians(theta+30)), y+step_size*sin(radians(theta+30)), (theta+30)%360)
+    #Rounding off the node to nearest 0.5 decimal value
+    child_node = (round(child_node[0]*2)/2, round(child_node[1]*2)/2, child_node[2])
+    child_node_info = [node, (node_info[1] + 1)]
+    return child_node, child_node_info
+
+#Function to move the node 60 degrees in anticlockwise direction
+def ActionMoveUpSixty(node, node_info, step_size):
+    '''
+    Input:
+    node      : tuple(x, y, theta)
+    node_info : list[parent_node, cost_to_come]
+    
+    Output:
+    child_node, child_node_info
+    '''
+    x, y, theta = node
+    child_node = (x+step_size*cos(radians(theta+60)), y+step_size*sin(radians(theta+60)), (theta+60)%360)
+    #Rounding off the node to nearest 0.5 decimal value
+    child_node = (round(child_node[0]*2)/2, round(child_node[1]*2)/2, child_node[2])
+    child_node_info = [node, (node_info[1] + 1)]
+    return child_node, child_node_info
+
+#Function to move the node 30 degrees in clockwise direction
+def ActionMoveDownThirty(node, node_info, step_size):
+    '''
+    Input:
+    node      : tuple(x, y, theta)
+    node_info : list[parent_node, cost_to_come]
+    
+    Output:
+    child_node, child_node_info
+    '''
+    x, y, theta = node
+    child_node = (x+step_size*cos(radians(theta-30)), y+step_size*sin(radians(theta-30)), (theta-30)%360)
+    #Rounding off the node to nearest 0.5 decimal value
+    child_node = (round(child_node[0]*2)/2, round(child_node[1]*2)/2, child_node[2])
+    child_node_info = [node, (node_info[1] + 1)]
+    return child_node, child_node_info
+
+#Function to move the node 60 degrees in clockwise direction
+def ActionMoveDownSixty(node, node_info, step_size):
+    '''
+    Input:
+    node      : tuple(x, y, theta)
+    node_info : list[parent_node, cost_to_come]
+    
+    Output:
+    child_node, child_node_info
+    '''
+    x, y, theta = node
+    child_node = (x+step_size*cos(radians(theta-60)), y+step_size*sin(radians(theta-60)), (theta-60)%360)
+    #Rounding off the node to nearest 0.5 decimal value
+    child_node = (round(child_node[0]*2)/2, round(child_node[1]*2)/2, child_node[2])
+    child_node_info = [node, (node_info[1] + 1)]
+    return child_node, child_node_info
+
 
