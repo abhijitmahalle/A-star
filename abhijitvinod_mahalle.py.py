@@ -239,4 +239,100 @@ def visualization(visited_node, optimal_path):
         fig.canvas.draw()
         fig.canvas.flush_events()
 
+# main function
+if __name__ == '__main__':
+    
+    while True:
+        initial_node = tuple(map(int, input("Enter initial node's x, y, and theta separated by comma: ").split(",")))
+        if in_clearance_space(initial_node):
+            print("\nThe start node is in the obstacle space. Please try again.\n")
+        else:
+            print("\nStart node accepted\n")
+            break
+    while True:
+        goal_node = tuple(map(int, input("Enter goal node's x, y, and theta separated by comma: ").split(",")))
+        if in_clearance_space(goal_node):
+            print("\nThe goal node is in the obstacle space. Please try again.\n")
+        else:
+            print("\nGoal node accepted\n")
+            break
+    while True:
+        step_size = int(input("Enter step size between 1 and 10: "))
+        if 1<=step_size<=10:
+            print("\nStep size accepted\n")
+            break
+        else:
+            print("\nStep size should be between 1 and 10. Please try again.\n")
+    print("Searching for goal node...\n")        
+    open_list = PriorityQueue()
+    c2c = 0
+    c2g = costToGo(initial_node, goal_node)
+    open_list.put((totalCost(c2c, c2g), [initial_node, None, 0, 0]))
+    
+    V = np.empty([800,500,12])
+    
+    closed_list = {}
+   
+    node_index = 1
+    
+    visited_node = []
+    
+    while True:
+        nodeWithLowestCost = open_list.get()
+        node = nodeWithLowestCost[1][0]
+        node_info = nodeWithLowestCost[1][1:]
+
+        if node not in closed_list:
+            closed_list[node] = node_info[0]
+        
+            if isGoalReached(node, goal_node):
+                print("Reached goal node\n")
+                break
+            
+            new_node, new_node_info = ActionMoveZero(node, node_info, step_size)
+            if not in_clearance_space(new_node):
+                c2g = costToGo(new_node, goal_node)
+                open_list.put((totalCost(new_node_info[1], c2g), [new_node, node, new_node_info[1]]))
+                isFalse, V = isNodeVisited(new_node, V)
+                if not isFalse:
+                    visited_node.append([node, new_node])
+
+            new_node, new_node_info = ActionMoveUpThirty(node, node_info, step_size)
+            if not in_clearance_space(new_node):
+                c2g = costToGo(new_node, goal_node)
+                open_list.put((totalCost(new_node_info[1], c2g), [new_node, node, new_node_info[1]]))
+                isFalse, V = isNodeVisited(new_node, V)
+                if not isFalse:
+                    visited_node.append([node, new_node])
+                    
+            new_node, new_node_info = ActionMoveUpSixty(node, node_info, step_size)
+            if not in_clearance_space(new_node):
+                c2g = costToGo(new_node, goal_node)
+                open_list.put((totalCost(new_node_info[1], c2g), [new_node, node, new_node_info[1]]))
+                isFalse, V = isNodeVisited(new_node, V)
+                if not isFalse:
+                    visited_node.append([node, new_node])
+
+            new_node, new_node_info = ActionMoveDownThirty(node, node_info, step_size)
+            if not in_clearance_space(new_node):
+                c2g = costToGo(new_node, goal_node)
+                open_list.put((totalCost(new_node_info[1], c2g), [new_node, node, new_node_info[1]]))
+                isFalse, V = isNodeVisited(new_node, V)
+                if not isFalse:
+                    visited_node.append([node, new_node])
+                
+            new_node, new_node_info = ActionMoveDownSixty(node, node_info, step_size)
+            if not in_clearance_space(new_node):
+                c2g = costToGo(new_node, goal_node)
+                open_list.put((totalCost(new_node_info[1], c2g), [new_node, node, new_node_info[1]]))
+                isFalse, V = isNodeVisited(new_node, V)
+                if not isFalse:
+                    visited_node.append([node, new_node])
+                
+path = backtracking(closed_list)
+
+
+
+
+
 
