@@ -1,17 +1,27 @@
-# A_star
-### Required libraries:
-NumPy
-cv2
-queue
-math
-matplotlib
+# Implementation of A* on a point robot
+This repository contains code to find a path between the start node and the goal node for a point robot using A* algorithm.  
 
-To run the file, type in the terminal of VS Code: 
+The action set for this project is:  
+<img src = "https://github.com/AbhijitMahalle/A_star/blob/master/results/action_set.PNG">  
+where, L represents the step size.  
 
-python abhijitvinod_mahalle.py
+The threshold distance to reach the goal node is 1.5 units without any constraint on the orientation.
+## Required libraries:
+1. NumPy
+2. OpenCV
+3. queue
+4. math
+5. matplotlib  
 
-Video Link:
-https://drive.google.com/drive/u/1/folders/1Xsja0y-rq87ZSok9kHuXLdc2MdZ9UFuj
+## Instructions to run the code:
+```
+python A_star.py
+```
+Program accepts step size as input. Below output is for step size of 5.
+### Node exploration
+![](https://github.com/AbhijitMahalle/A_star/blob/master/gif/A_star.gif)  
+### Generated path
+![](https://github.com/AbhijitMahalle/A_star/blob/master/results/path.png)
 
 
 
