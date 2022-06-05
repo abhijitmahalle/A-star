@@ -215,7 +215,7 @@ def visualization(visited_node, optimal_path):
         for x in range(img_map.shape[1]):
             node = (x, y, 0)
             if in_obstacle_space(node):
-                img_map[y-1][x-1] = [0, 0, 255]
+                img_map[y-1][x-1] = [255, 0, 0]
     
     plt.ion()
     fig = plt.figure()
@@ -238,7 +238,8 @@ def visualization(visited_node, optimal_path):
         ax.plot((parent_node[0],child_node[0]),(parent_node[1],child_node[1]),'g')
         fig.canvas.draw()
         fig.canvas.flush_events()
-
+        
+    fig.savefig('path.png')
 # main function
 if __name__ == '__main__':
     
